@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"os"
-	"your-module-path/getallaccounts" // Update this path to match your setup
+	"github.com/tyler180/aws-account-info/getallaccounts"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
