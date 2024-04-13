@@ -1,0 +1,26 @@
+DynamoDB Schema Design
+Given the requirement, we aim for a schema that supports efficient querying of accounts and their services. DynamoDB is a NoSQL database, and its design encourages thinking in terms of access patterns.
+
+Table Structure
+Table Name: AWSAccounts
+Primary Key: Composite of Partition Key and Sort Key
+Attributes:
+
+AccountID (Partition Key): A unique identifier for each AWS account.
+EntityType (Sort Key): To distinguish between an account and its services. It can be AccountInfo for the account's details or Service#{ServiceName} for services associated with the account.
+AccountName: Name of the AWS account.
+ServiceName: Name of the AWS service (e.g., EC2, S3). This is relevant only for items where EntityType starts with Service#.
+ServiceDetails: A map containing the service details. This structure can vary based on the service.
+Example Items
+Account Information:
+
+AccountID: "123456789012"
+EntityType: "AccountInfo"
+AccountName: "MyAWSAccount"
+Service Information (EC2 for the same account):
+
+AccountID: "123456789012"
+EntityType: "Service#EC2"
+ServiceName: "EC2"
+ServiceDetails: { "Region": "us-east-1", "InstanceCount": 10 }
+This design supports multiple AWS services under a single account by leveraging the EntityType sort key for querying both account details and its associated services efficiently.
